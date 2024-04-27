@@ -1,6 +1,6 @@
 const { test, expect } = require('@playwright/test');
 
-let name, email, phone, subject, message, submit, username, password, login;
+let name, email, phone, subject, message, submit, username, password, login, roomName, roomPrice, wifiCheckbox, tvCheckbox, createRoom, type, accessible, deleteRoom;
 const validName = "Anna Kowalska";
 const invalidName = "A"; 
 const validEmail = "akowalska@gmai.com";
@@ -15,6 +15,12 @@ const validUsername = "admin";
 const invalidUsername = "addmin";
 const validPassword = "password";
 const invalidPassword = "pasword";
+const validRoomNumber = "2";
+const validRoomPrice = "500";
+const tooHighNumber = "10000000000000000";
+const tooLowNumber = "-1";
+const validType = "Double";
+const accessibleTrue = "true";
 
 test.describe("Send a message", () => {
     test.beforeEach(async ({ page }) => {
@@ -135,6 +141,140 @@ test.describe("Send a message", () => {
 
     test("Log in leaving all fields empty", async ({ page }) => {
         await login.click();
+        await page.pause();
+    });
+
+});
+
+test.describe("Creating a room as an admin", () => {
+    test.beforeEach(async ({ page }) => {
+        await page.goto("https://automationintesting.online/#/admin");
+        username = page.locator("#username");
+        password = page.locator("#password");
+        login = page.locator("#doLogin");
+        roomName = page.locator("#roomName");
+        roomPrice = page.locator("#roomPrice");
+        wifiCheckbox = page.locator("#wifiCheckbox");
+        tvCheckbox = page.locator("#tvCheckbox");
+        createRoom = page.locator("#createRoom");
+        type = page.locator("#type");
+        accessible = page.locator("#accessible");
+        deleteRoom = page.locator("//span[@id='1']");
+    });
+
+    test("Create a room with valid information", async ({ page }) => {
+        await username.fill(validUsername);
+        await password.fill(validPassword);
+        await login.click();
+        await roomName.fill(validRoomNumber);
+        await type.selectOption(validType);
+        await accessible.selectOption(accessibleTrue);
+        await roomPrice.fill(validRoomPrice);
+        await wifiCheckbox.check();
+        await tvCheckbox.check();
+        await createRoom.click();
+        await page.pause();
+    });
+
+    test("Create a room without entering a number", async ({ page }) => {
+        await username.fill(validUsername);
+        await password.fill(validPassword);
+        await login.click();
+        await type.selectOption(validType);
+        await accessible.selectOption(accessibleTrue);
+        await roomPrice.fill(validRoomPrice);
+        await wifiCheckbox.check();
+        await tvCheckbox.check();
+        await createRoom.click();
+        await page.pause();
+    });
+
+    test("Create a room without entering a price", async ({ page }) => {
+        await username.fill(validUsername);
+        await password.fill(validPassword);
+        await login.click();
+        await roomName.fill(validRoomNumber);
+        await type.selectOption(validType);
+        await accessible.selectOption(accessibleTrue);
+        await wifiCheckbox.check();
+        await tvCheckbox.check();
+        await createRoom.click();
+        await page.pause();
+    });
+
+    test("Create a room entering too high price", async ({ page }) => {
+        await username.fill(validUsername);
+        await password.fill(validPassword);
+        await login.click();
+        await roomName.fill(validRoomNumber);
+        await type.selectOption(validType);
+        await accessible.selectOption(accessibleTrue);
+        await roomPrice.fill(tooHighNumber);
+        await wifiCheckbox.check();
+        await tvCheckbox.check();
+        await createRoom.click();
+        await page.pause();
+    });
+
+    test("Create a room entering too low price", async ({ page }) => {
+        await username.fill(validUsername);
+        await password.fill(validPassword);
+        await login.click();
+        await roomName.fill(validRoomNumber);
+        await type.selectOption(validType);
+        await accessible.selectOption(accessibleTrue);
+        await roomPrice.fill(tooLowNumber);
+        await wifiCheckbox.check();
+        await tvCheckbox.check();
+        await createRoom.click();
+        await page.pause();
+    });
+
+    test("Create a room entering too high room number", async ({ page }) => {
+        await username.fill(validUsername);
+        await password.fill(validPassword);
+        await login.click();
+        await roomName.fill(tooHighNumber);
+        await type.selectOption(validType);
+        await accessible.selectOption(accessibleTrue);
+        await roomPrice.fill(validRoomPrice);
+        await wifiCheckbox.check();
+        await tvCheckbox.check();
+        await createRoom.click();
+        await page.pause();
+    });
+
+    test("Create a room entering too low room number", async ({ page }) => {
+        await username.fill(validUsername);
+        await password.fill(validPassword);
+        await login.click();
+        await roomName.fill(tooLowNumber);
+        await type.selectOption(validType);
+        await accessible.selectOption(accessibleTrue);
+        await roomPrice.fill(validRoomPrice);
+        await wifiCheckbox.check();
+        await tvCheckbox.check();
+        await createRoom.click();
+        await page.pause();
+    });
+
+    test("Create a room without choosing any room details", async ({ page }) => {
+        await username.fill(validUsername);
+        await password.fill(validPassword);
+        await login.click();
+        await roomName.fill(validRoomNumber);
+        await type.selectOption(validType);
+        await accessible.selectOption(accessibleTrue);
+        await roomPrice.fill(validRoomPrice);
+        await createRoom.click();
+        await page.pause();
+    });
+
+    test("Deleting a room ", async ({ page }) => {
+        await username.fill(validUsername);
+        await password.fill(validPassword);
+        await login.click();
+        await deleteRoom.click();
         await page.pause();
     });
 
