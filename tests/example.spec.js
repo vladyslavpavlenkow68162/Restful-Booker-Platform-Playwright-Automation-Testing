@@ -24,7 +24,7 @@ const tooLowNumber = "-1";
 const validType = "Double";
 const accessibleTrue = "true";
 
-test.describe("Send a message", () => {
+test.describe.parallel("Send a message", () => {
     test.beforeEach(async ({ page }) => {
         await page.goto(mainPage);
         name = page.locator("#name");
@@ -112,7 +112,7 @@ test.describe("Send a message", () => {
 
 });
 
-test.describe("Send a message", () => {
+test.describe.parallel("Login in admin panel", () => {
     test.beforeEach(async ({ page }) => {
         await page.goto(adminPanel);
         username = page.locator("#username");
@@ -148,7 +148,7 @@ test.describe("Send a message", () => {
 
 });
 
-test.describe("Creating a room as an admin", () => {
+test.describe.parallel("Creating a room as an admin", () => {
     test.beforeEach(async ({ page }) => {
         await page.goto(adminPanel);
         username = page.locator("#username");
