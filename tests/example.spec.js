@@ -1,6 +1,8 @@
 const { test, expect } = require('@playwright/test');
 
 let name, email, phone, subject, message, submit, username, password, login, roomName, roomPrice, wifiCheckbox, tvCheckbox, createRoom, type, accessible, deleteRoom;
+const mainPage = "https://automationintesting.online/";
+const adminPanel = "https://automationintesting.online/#/admin";
 const validName = "Anna Kowalska";
 const invalidName = "A"; 
 const validEmail = "akowalska@gmai.com";
@@ -24,7 +26,7 @@ const accessibleTrue = "true";
 
 test.describe("Send a message", () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto("https://automationintesting.online/");
+        await page.goto(mainPage);
         name = page.locator("#name");
         email = page.locator("#email");
         phone = page.locator("#phone");
@@ -112,7 +114,7 @@ test.describe("Send a message", () => {
 
 test.describe("Send a message", () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto("https://automationintesting.online/#/admin");
+        await page.goto(adminPanel);
         username = page.locator("#username");
         password = page.locator("#password");
         login = page.locator("#doLogin");
@@ -148,7 +150,7 @@ test.describe("Send a message", () => {
 
 test.describe("Creating a room as an admin", () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto("https://automationintesting.online/#/admin");
+        await page.goto(adminPanel);
         username = page.locator("#username");
         password = page.locator("#password");
         login = page.locator("#doLogin");
